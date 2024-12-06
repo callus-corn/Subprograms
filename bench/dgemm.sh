@@ -4,4 +4,4 @@
 #SBATCH --exclusive  # threads/MPI processe
 #SBATCH -t 12:00:00  # timeout
 #SBATCH -e ./dgemm.log
-./dgemm 90 400 10 1 n n
+./dgemm 1000 5000 100 1 n n

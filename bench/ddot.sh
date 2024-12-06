@@ -4,4 +4,4 @@
 #SBATCH --exclusive  # threads/MPI processe
 #SBATCH -t 12:00:00  # timeout
 #SBATCH -e ./ddot.log
-./ddot 90 400 10 1
+./ddot 10000 50000 1000 100000

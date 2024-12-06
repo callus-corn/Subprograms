@@ -42,15 +42,12 @@ int main(int argc, char *argv[]){
   }
 
   for(m = from; m <= to; m += step) {
-    total_time = 0;
+    clock_gettime(CLOCK_REALTIME, &start);
     for (l = 0; l < loops; l++) {
-      clock_gettime(CLOCK_REALTIME, &start);
-
       result = ddot_(&m, x, &inc_x, y, &inc_y);
-
-      clock_gettime(CLOCK_REALTIME, &stop);
-      total_time += (double)(stop.tv_sec - start.tv_sec) + (double)((stop.tv_nsec - start.tv_nsec)) * 1.e-9;
     }
+    clock_gettime(CLOCK_REALTIME, &stop);
+    total_time = (double)(stop.tv_sec - start.tv_sec) + (double)((stop.tv_nsec - start.tv_nsec)) * 1.e-9;
     average_time = total_time / loops;
 
     fprintf(stderr, " %6d : %10.2f MFlops %10.6f sec \n", m, 2. * (double)m / average_time * 1.e-6, total_time);
