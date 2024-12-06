@@ -24,11 +24,12 @@ int main(int argc, char *argv[]){
 
   argc--;argv++;
 
-  if (argc > 0) { from  = atol(*argv); argc--; argv++; }
-  if (argc > 0) { to    = atol(*argv); argc--; argv++; }
-  if (argc > 0) { step  = atol(*argv); argc--; argv++; }
-  if (argc > 0) { loops = atol(*argv); argc--; argv++; }
-
+  if (argc > 0) { from   = atol(*argv); argc--; argv++; }
+  if (argc > 0) { to     = atol(*argv); argc--; argv++; }
+  if (argc > 0) { step   = atol(*argv); argc--; argv++; }
+  if (argc > 0) { loops  = atol(*argv); argc--; argv++; }
+  if (argc > 0) { transa = **argv;       argc--; argv++; }
+  if (argc > 0) { transb = **argv;       argc--; argv++; }
 
   m = to;
   n = to;
@@ -54,9 +55,6 @@ int main(int argc, char *argv[]){
     c[i] = ((double) rand() / (double) RAND_MAX) - 0.5;
   }
 
-  fprintf(stderr, "From : %3d  To : %3d Step=%d : Transa=%c : Transb=%c\n", from, to, step, transa, transb);
-  fprintf(stderr, "          SIZE                   Flops             Time\n");
-
   for (i = from; i <= to; i += step) {
     m = i;
     n = i;
@@ -76,7 +74,7 @@ int main(int argc, char *argv[]){
     total_time = (double)(stop.tv_sec - start.tv_sec) + (double)((stop.tv_nsec - start.tv_nsec)) * 1.e-9;
     average_time = total_time / loops;
 
-    fprintf(stderr, " %6d %6d %6d : %10.2f MFlops %10.6f sec\n", m, n, k, 2. * (double)k * (double)m * (double)n / average_time * 1.e-6, total_time);
+    fprintf(stderr, " %c %c %6d %6d %6d : %10.2f MFlops %10.6f sec\n", transa, transb, m, n, k, 2. * (double)k * (double)m * (double)n / average_time * 1.e-6, total_time);
   }
 
   return 0;

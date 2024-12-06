@@ -41,9 +41,6 @@ int main(int argc, char *argv[]){
     y[i] = ((double) rand() / (double) RAND_MAX) - 0.5;
   }
 
-  fprintf(stderr, "From : %3d  To : %3d Step = %3d Inc_x = %d Inc_y = %d Loops = %d\n", from, to, step,inc_x,inc_y,loops);
-  fprintf(stderr, "   SIZE       Flops\n");
-
   for(m = from; m <= to; m += step) {
     total_time = 0;
     for (l = 0; l < loops; l++) {

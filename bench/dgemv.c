@@ -29,6 +29,7 @@ int main(int argc, char *argv[]){
   if (argc > 0) { to       = atol(*argv);	argc--; argv++;}
   if (argc > 0) { step     = atol(*argv);	argc--; argv++;}
   if (argc > 0) { loops    = atol(*argv);	argc--; argv++;}
+  if (argc > 0) { trans    = **argv;		argc--; argv++;}
 
   if (( a = (double *)malloc(sizeof(double) * to * to)) == NULL){
     fprintf(stderr,"Out of Memory!!\n");exit(1);
@@ -50,9 +51,6 @@ int main(int argc, char *argv[]){
     y[i] = ((double) rand() / (double) RAND_MAX) - 0.5;
   }
 
-  fprintf(stderr, "From : %3d  To : %3d Step = %3d Trans = '%c' Inc_x = %d Inc_y = %d Loops = %d\n", from, to, step,trans,inc_x,inc_y,loops);
-  fprintf(stderr, "   SIZE       Flops\n");
-
   for(m = from; m <= to; m += step) {
     n = m;
 
@@ -67,7 +65,7 @@ int main(int argc, char *argv[]){
     }
     average_time = total_time / loops;
 
-    fprintf(stderr, " %6d x %6d : %10.2f MFlops %10.6f sec\n", m, n , 2. * (double)m * (double)n / average_time * 1.e-6, total_time);
+    fprintf(stderr, " %c %6d %6d : %10.2f MFlops %10.6f sec\n", trans, m, n, 2. * (double)m * (double)n / average_time * 1.e-6, total_time);
   }
 
   return 0;

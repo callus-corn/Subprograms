@@ -8,5 +8,10 @@ dgemv: dgemv.c ../dgemv.c
 dgemm: dgemm.c ../dgemm.c
 	${CC} dgemm.c -o dgemm -I.. ../dgemm.c
 
+run:
+	./ddot.sh
+	./dgemv.sh
+	./dgemm.sh
+
 clean:
 	rm ${TARGET}
