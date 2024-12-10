@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
       dgemv_(&trans, &m, &n, &alpha, a, &m, x, &inc_x, &beta, y, &inc_y);
     }
     clock_gettime(CLOCK_REALTIME, &stop);
-    total_time += (double)(stop.tv_sec - start.tv_sec) + (double)((stop.tv_nsec - start.tv_nsec)) * 1.e-9;
+    total_time = (double)(stop.tv_sec - start.tv_sec) + (double)((stop.tv_nsec - start.tv_nsec)) * 1.e-9;
     average_time = total_time / loops;
 
     fprintf(stderr, " %c %6d %6d : %10.2f MFlops %10.6f sec\n", trans, m, n, 2. * (double)m * (double)n / average_time * 1.e-6, total_time);
