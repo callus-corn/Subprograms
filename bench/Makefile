@@ -1,17 +1,35 @@
-TARGET=ddot dgemv dgemm
+TARGET=calc
+
+ifndef CALCLIB
+CALCLIB=..
+endif
+
+ifdef OPENBLASLIB
+TARGET+=openblas
+endif
+
+ifdef ARMPLLIB
+TARGET+=armpl
+endif
+
+CALCFLAGS=-L${CALCLIB}/lib -I${CALCLIB}/include -lcalc -DCALC
+OPENBLASFLAGS=-L${OPENBLASLIB}/lib -I${OPENBLASLIB}/include -lopenblas -DOPENBLAS
+ARMPLFLAGS=-L${ARMPLLIB}/lib -I${ARMPLLIB}/include -larmpl -DARMPL
+
 all: ${TARGET}
 
-ddot: ddot.c ../ddot.c
-	${CC} ddot.c -o ddot -I.. ../ddot.c
-dgemv: dgemv.c ../dgemv.c
-	${CC} dgemv.c -o dgemv -I.. ../dgemv.c
-dgemm: dgemm.c ../dgemm.c
-	${CC} dgemm.c -o dgemm -I.. ../dgemm.c
+calc: dgemm.calc
+openblas: dgemm.openblas
+armpl: dgemm.armpl
 
-run:
-	./ddot.sh
-	./dgemv.sh
-	./dgemm.sh
+dgemm.calc: dgemm.c
+	${CC} $^ -o $@ ${CALCFLAGS}
+dgemm.openblas: dgemm.c
+	${CC} $^ -o $@ ${OPENBLASFLAGS}
+dgemm.armpl: dgemm.c
+	${CC} $^ -o $@ ${ARMPLFLAGS}
 
 clean:
-	rm ${TARGET}
+	rm -f dgemm.calc
+	rm -f dgemm.openblas
+	rm -f dgemm.armpl
